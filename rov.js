@@ -37,13 +37,13 @@
 	var setNodes = function(nodes, origin_obj) {
 		var ox = origin_obj.getPos().x;
 		var oy = origin_obj.getPos().y;
-		var origin = 'M' + ox + ' ' + (oy - origin_obj.attrs.r);
+		var origin = 'M' + ox + ' ' + oy;
 		var terminus = 'L' + ox + ' ' + (oy - (oy / 2));
 		var degrees_apart = 360 / nodes.length;
 		for (var i=0; i < nodes.length; i++) {
 			var angle = degrees_apart * i;
 			var path = origin_obj.paper.path(origin + terminus);
-			// path.rotate(angle);
+			path.rotate(angle);
 		};
 		console.log(origin_obj);
 		console.log(origin + terminus);
