@@ -5,7 +5,7 @@
 	// AppNexus Universe namespace
 	
 	// Returns the center of the object on which it is called.
-	Raphael.el.getPosition = function() {
+	Raphael.el.getPos = function() {
 		var p = this.paper;
 		var pos = {};
 		switch(this.node.nodeName) {
@@ -34,11 +34,19 @@
 		}
 	}
 	
-	var angularPlacement = function(nodes, origin) {
-		var angle = 360 / nodes.length;
+	var setNodes = function(nodes, origin_obj) {
+		var ox = origin_obj.getPos().x;
+		var oy = origin_obj.getPos().y;
+		var origin = 'M' + ox + ' ' + (oy - origin_obj.attrs.r);
+		var terminus = 'L' + ox + ' ' + (oy - (oy / 2));
+		var degrees_apart = 360 / nodes.length;
 		for (var i=0; i < nodes.length; i++) {
-			
+			var angle = degrees_apart * i;
+			var path = origin_obj.paper.path(origin + terminus);
+			// path.rotate(angle);
 		};
+		console.log(origin_obj);
+		console.log(origin + terminus);
 	}
 	
 	var ROV = function() {
@@ -78,14 +86,6 @@
 		}
 	}
 	
-	var RaphaelRender = function() {
- 		this.paper = Raphael('r-cont', 800, 600);
-		var c = this.paper.circle(400, 300, 50);
-		c.attr({ fill: '#ff1133' });
-		
-		this.paper.text(400, 300, 'Node Name');
-	}
-	
 	$(function(){
 		// var R = new RaphaelRender();
 		var rov = new ROV();
@@ -96,7 +96,7 @@
 			name: 'member 310',
 			radius: 50
 		});
-		angularPlacement(new Array(5), planet);
+		setNodes(new Array(5), planet);
 	});
 	
 })(this);
